@@ -1,0 +1,16 @@
+asgiref==3.5.2
+backports.zoneinfo==0.2.1
+decouple==0.0.7
+dj-database-url==0.5.0
+dj-static==0.0.6
+Django==4.0.4
+python-decouple==3.6
+sqlparse==0.4.2
+static3==0.7.0
+#o gunicorn é o servidor web que vai receber requisições e transmitir pro django. já o 
+#pyscopg2 é o driver do banco postgres que o heroku vai usar pra fornecer o banco
+#postgres pra gente. as dependências necessárias podem ser inseridas diretamente aqui,
+#porque o heroku vai ler esse arquivo para instalar todas as dependencias e colocar a
+#nossa aplicação no ar. 
+gunicorn==20.1.0
+psycopg2==2.9.3
