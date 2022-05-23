@@ -1,3 +1,4 @@
-from django.views.generic.list import ListView
+from django.shortcuts import render
 
-home = ListView.as_view(template_name='index.html')
+def home(request):
+	return render(request, 'index.html')

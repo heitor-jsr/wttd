@@ -1,8 +1,4 @@
-{% load static %} <!--trata-se de um template-tag que voce quer carregar. isso vai
-carregar os assests no django que voce precisar e estiver em outra pasta. Isso deve
-ser inserido em todos os assests de template que voce precisar, como se pode ver abaixo.
-é muito similar a um import.-->
-
+{% load static %}
 <!DOCTYPE html>
 <html>
 	<head>
@@ -16,14 +12,11 @@ ser inserido em todos os assests de template que voce precisar, como se pode ver
 
         <!-- Favicon -->
         <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
-        <!--  trata-se de uma aplicação template tag do proprio django, que vai
-        processar esse cara, resultando o conteúdo para compor o html final. -->
 
         <!-- CSS -->
         <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
         <link rel="stylesheet" href="{% static 'css/basalstyle/style.min.css' %}">
         <link rel="stylesheet" href="{% static 'css/main.css' %}">
-
         <link href='http://fonts.googleapis.com/css?family=Economica:400,700' rel='stylesheet' type='text/css'>
 
         <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
@@ -41,7 +34,24 @@ ser inserido em todos os assests de template que voce precisar, como se pode ver
 	<body>
 
         <div class="header-frame header-frame-absolute  row">
-            {% include 'nav.html' only %}
+            <header class="header header-inline min-h-3 row desktop-12 container" role="banner">
+
+                <div class="site-logo">
+                    <h1><a href="/" rel="home">Eventex</a></h1>
+                    <p class="site-description screen-reader-only">O maior encontro hacker do mundo!</p>
+                </div>
+
+                <nav class="nav-inline" role="navigation">
+                    <a href="javascript:void(0);" class="nav-mobile"><i class="fa fa-bars"></i></a>
+                    <ul>
+                        <li><a data-scroll href="#overview">Conferência</a></li>
+                        <li><a data-scroll href="#sponsors">Patrocinadores</a></li>
+                        <li><a data-scroll href="inscricao/">Inscrição</a></li>
+                        <li><a data-scroll href="#venue">Local</a></li>
+                    </ul>
+                </nav>
+
+            </header>
         </div>
 
       	<!-- TOP -->
@@ -62,21 +72,6 @@ ser inserido em todos os assests de template que voce precisar, como se pode ver
             </div>
         </section>
 
-        <section id="speakers">
-            <div class="speakers text-align-center row desktop-8 padding-bottom-2 container">
-                <h2>Palestrantes Convidados</h2>
-                {% for speaker in speaker_list %}
-                <div class="desktop-4">
-                    <img src="{{ speaker.photo }}"/>
-                    <h4>
-                        <a href="{{ speaker.get_absolute_url }}">
-                            {{ speaker.name }}
-                        </a>
-                    </h4>
-                </div>
-                {% endfor %}
-        </section>
-
         <!-- SPONSORS -->
         <section id="sponsors">
         	<div class="sponsors text-align-center row desktop-12 min-h-28 padding-bottom-2 container">
@@ -93,12 +88,12 @@ ser inserido em todos os assests de template que voce precisar, como se pode ver
 
                 <h3>Silver</h3>
                 <div class="sponsor-slider min-h-6 margin-bottom-1">
-                	<img class="img-responsive" src="{% static 'img/sponsor-silver-01.png' %}" alt="logo">
-                    <img class="img-responsive" src="{% static 'img/sponsor-silver-02.png' %}" alt="logo">
-                    <img class="img-responsive" src="{% static 'img/sponsor-silver-03.png' %}" alt="logo">
-                    <img class="img-responsive" src="{% static 'img/sponsor-silver-04.png' %}" alt="logo">
-                    <img class="img-responsive" src="{% static 'img/sponsor-silver-05.png' %}" alt="logo">
-                    <img class="img-responsive" src="{% static 'img/sponsor-silver-06.png' %}" alt="logo">
+                    <img class="img-responsive" src="{%  static 'img/sponsor-silver-02.png' %}" alt="logo">
+                	<img class="img-responsive" src="{%  static 'img/sponsor-silver-01.png' %}" alt="logo">
+                    <img class="img-responsive" src="{%  static 'img/sponsor-silver-03.png' %}" alt="logo">
+                    <img class="img-responsive" src="{%  static 'img/sponsor-silver-04.png' %}" alt="logo">
+                    <img class="img-responsive" src="{%  static 'img/sponsor-silver-05.png' %}" alt="logo">
+                    <img class="img-responsive" src="{%  static 'img/sponsor-silver-06.png' %}" alt="logo">
                 </div>
 
                 <h3>Seja um patrocinador</h3>
@@ -113,9 +108,9 @@ ser inserido em todos os assests de template que voce precisar, como se pode ver
             <div class="register row">
                 <div class="text-align-center row desktop-12 padding-top-2 min-h-14 container">
                 	<h2>Inscrição</h2>
-                	<h3>Inscrições abertas!</h3>
+                	<h3>Inscrições em breve!</h3>
                     <p>Fique à vontade para entrar em contato com a gente.<br>Teremos prazer em responder quaisquer dúvidas.</p>
-                	<a class="btn-basic btn-blue" href="{% url 'subscriptions:new' %}">Inscreva-se já!</a>
+                	<a class="btn-basic btn-blue" href="/inscricao/">Inscreva-se já</a>
                 </div>
             </div>
         </section>

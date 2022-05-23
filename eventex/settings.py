@@ -9,19 +9,10 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
-"""
-o Procfile criado na raiz do sistema vai informar a forma que o heroku deve abrir a 
-nossa aplicação. o nome dele deve ser criado exatamente da forma ao lado.
-dentro do arquivo você deve inserir web: gunicorn eventex.wsgi --log-file -. isso vai
-informar para o heruko que ele deve iniciar um serviço web, começando com o comando
-gunicorn, e inicializar a aplicação wsgi que é o nosso projeto django. o --log-file 
-é um comando do gunicorn, que vai informar a forma que deve ser feito o login no heroku.
-"""
 from email.policy import default
 import os
 from pathlib import Path
-from decouple import config
+from decouple import Config
 from dj_database_url import parse as dburl
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -32,16 +23,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = Config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=False, cast=bool)
+DEBUG = Config('DEBUG', default=False, cast=bool) 
 
-
-# quando nossa aplicação recebe uma requisição http, ela vai ser endereçada a um
-# host específico. o heroku exige que a gente informe qual é o host que vamos atender.
-# assim, para atendermos minimamente o requisito do heroku, vamos simplesmente dizer que
-# respondemos todas as requisições de todos os hosts, com uma '*'.
 ALLOWED_HOSTS = ['*']
 
 
@@ -91,25 +77,11 @@ WSGI_APPLICATION = 'eventex.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+
 default_dburl ='sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
+
 DATABASES = {
-'''    o dj_databse tem o módulo parse, que tem a capacidade de pegar as respostas de
-    uma url, parsear elas e converter em dicionários para serem usados no nosso banco
-    de dados. isso permite que nós adicionemos um dict default pra database, passando
-    o método config do decouple (permite que voce tenha um único code base pra varias instancias)
-    - o config vai ler as configurações da instancia a partir das variaveis de ambiente
-    do  sistema. isso permite que o nosso databse seja extraido da nossa url, passando
-    como parametro default a variavel acima, e dando o cast de parse do dj_database.
-    assim, na hora que o settings for carregado vai ser executado o  config do decouple,
-    que vai olhar a variavel de ambiente DATABSE_URL (se existe) - se não existir, ele 
-    olha no .env se existe. se não existir lá no .env também, ele usa o default passado, que 
-    é a url do arquivo do banco de dados, com o caminho dele no nosso disco (usado para
-    desenvolvimento); depois disso, o cast expande a url, transformando-a em  dicionario
-    para a configuração do django. por isso, se o projeto por rodado sem a var de ambiente
-    DATABASE_URL, ele vai rodar de boa com o banco do disco - agora, se for criada a var 
-    de ambiente DATABSE_URL com uma URL para um banco, o django vai rodar o nosso projeto com 
-    os valores desse banco.  
-'''    'default':config('DATABASE_URL', default=default_dburl, cast=dburl)
+    'default': Config('DATABASE_URL', default=default_dburl, cast=dburl),
     }
 
 
@@ -135,11 +107,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = 'pt-br'
+LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
-
-USE_L10N = True
 
 USE_I18N = True
 
@@ -150,17 +120,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
-"""é o diretório para onde o django vai copiar todos os arquivos estáticos que ele 
-encontrar dentro das dependências do projeto (por padrão o  django não segue 
-arquivos estáticos). acontece que o heroku não tem a ferramenta necessária para
-que nós contornemos o fato de que o django não segue os arquivos estáticos. para
-isso, usaremos uma extensão dj-static, que é uma aplicação wsgi padrão do python,
-que vai ficar na frente do django, tomando a decisão de servir os arquivos staticos.
-no caso, usaremos o comando Cling do dj-static, que é uma aplicação wsgi (padrao  do ptyhon)
-e vai ser responsavel por capturar uma requisição da web, executar as tarefas  dele
-e  depois delegar a função para o wsgi_application, que é o entrypoint do django, 
-possibilitando que servimos os arquivos staticos antes de chegar a requisição no django.
-"""  
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
