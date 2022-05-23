@@ -1,5 +1,6 @@
 .env
 .idea
+.wttd-n/
 .wttd/
 *.sqlite3
 *pyc
