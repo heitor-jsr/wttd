@@ -50,7 +50,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'eventex.urls'
@@ -83,8 +82,6 @@ default_dburl ='sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
 DATABASES = {
     'default': config('DATABASE_URL', default=default_dburl, cast=dburl),
     }
-
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
